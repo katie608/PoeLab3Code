@@ -23,20 +23,21 @@ void setup() {
 
   // begin adafruit motor shield
   AFMS.begin();
-  myMotor1->setSpeed(50);
-  myMotor2->setSpeed(50);
+  myMotor1->setSpeed(10);
+  myMotor2->setSpeed(10);
 }
 
 void loop() {
   // set sensors equal to variables so they can be used in calculaiton
   long sensor1 = analogRead(A0); // on the left
   long sensor2 = analogRead(A1); // on the right
-  
-  // proportional control: (difference / range) * constant
-  
-  myMotor1->run(FORWARD);
-  myMotor2->run(FORWARD);
 
+  myMotor1->run(BACKWARD);
+  myMotor2->run(BACKWARD);
+  
+  myMotor1->setSpeed(10*(sensor1-sensor2)/50+20);
+  myMotor2->setSpeed(10*(sensor2-sensor1)/50+20);
+  
   // display IR sensor values
   // IR values are about 952 when pointed at floor, and 1002 when pointed at tape
   Serial.print(sensor1);
